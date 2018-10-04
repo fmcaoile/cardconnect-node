@@ -5,12 +5,12 @@ https://developer.cardconnect.com/bolt-p2pe#overview
 
 ## Installation
 ```
-npm install --save cardconnect-node-bolt
+npm install --save cardconnect-node
 ```
 
 ## Usage
 ```
-import { CardConnect } from 'cardconnect-node-bolt';
+import { CardConnect } from 'cardconnect-node';
 
 const cardConnect = new CardConnect({
   apiKey: 'YOUR_API_KEY', 
@@ -26,7 +26,7 @@ const cardConnect = new CardConnect({
 CardConnect documentation for this service can be found here: (https://developer.cardconnect.com/bolt-p2pe#listTerminals)
 
 ```
-import { IListTerminalsResponse } from 'cardconnect-node-bolt';
+import { IListTerminalsResponse } from 'cardconnect-node';
 
 cardConnect.listTerminals()
   .then((response: IListTerminalsResponse)=>{
@@ -43,7 +43,7 @@ cardConnect.listTerminals()
 CardConnect documentation for this service can be found here: (https://developer.cardconnect.com/bolt-p2pe#connect)
 
 ```
-import { IConnectRequestOptions } from 'cardconnect-node-bolt';
+import { IConnectRequestOptions } from 'cardconnect-node';
 
 const params: IConnectRequestOptions = {
   hsn: string;
@@ -65,7 +65,7 @@ cardConnect.connect(params)
 CardConnect documentation for this service can be found here: (https://developer.cardconnect.com/bolt-p2pe#disconnect)
 
 ```
-import { IBaseRequestOptions } from 'cardconnect-node-bolt';
+import { IBaseRequestOptions } from 'cardconnect-node';
 
 const params: IBaseRequestOptions = {
   hsn: string;
@@ -84,7 +84,7 @@ cardConnect.disconnect(params)
 CardConnect documentation for this service can be found here: (https://developer.cardconnect.com/bolt-p2pe#authCard)
 
 ```
-import { IAuthCardRequestOptions, IAuthCardResponse } from 'cardconnect-node-bolt';
+import { IAuthCardRequestOptions, IAuthCardResponse } from 'cardconnect-node';
 
 const params: IAuthCardRequestOptions = {
   hsn: string;
@@ -113,7 +113,7 @@ cardConnect.authCard(cardConnectSessionKey, params)
 CardConnect documentation for this service can be found here: (https://developer.cardconnect.com/bolt-p2pe#authManual)
 
 ```
-import { IAuthManualRequestOptions, IAuthManualResponse } from 'cardconnect-node-bolt';
+import { IAuthManualRequestOptions, IAuthManualResponse } from 'cardconnect-node';
 
 const params: IAuthCardRequestOptions = {
   hsn: string;
@@ -143,7 +143,7 @@ cardConnect.authManual(cardConnectSessionKey, params)
 CardConnect documentation for this service can be found here: (https://developer.cardconnect.com/bolt-p2pe#readInput)
 
 ```
-import { IReadInputRequestOptions, IReadInputResponse } from 'cardconnect-node-bolt';
+import { IReadInputRequestOptions, IReadInputResponse } from 'cardconnect-node';
 
 const params: IReadInputRequestOptions = {
   hsn: string;
