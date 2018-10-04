@@ -3,6 +3,10 @@ export interface IBaseRequestOptions {
   merchantId?: string;
 }
 
+export interface IListTerminalsResponse {
+  terminals: Array<string>
+}
+
 export interface IPingResponse {
   connected: boolean;
 }
@@ -32,35 +36,66 @@ export interface IReadInputResponse {
 }
 
 export interface IAuthCardRequestOptions extends IBaseRequestOptions {
-  amount?: string;
-  includeSignature?: string;
-  includeAmountDisplay?: string;
-  beep?: string;
+  amount?: number;
+  includeSignature?: boolean;
+  includeAmountDisplay?: boolean;
+  beep?: boolean;
   aid?: string;
-  includeAVS?: string;
-  capture?: string;
+  includeAVS?: boolean;
+  capture?: boolean;
   orderId?: string;
   userFields?: Object;
-  clearDisplayDelay?: string;
+  clearDisplayDelay?: number;
 }
 
 export interface IAuthCardResponse {
-  token: string,
-  expiry: string,
-  name: string,
-  signature: string,
-  batchid: string,
-  retref: string,
-  avsresp: string,
-  respproc: string,
-  amount: string,
-  resptext: string,
-  authcode: string,
-  respcode: string,
-  merchid: string,
-  cvvresp: string,
-  respstat: string,
-  tokenExpired : boolean
+  token: string;
+  expiry: string;
+  name: string;
+  signature: string;
+  batchid: string;
+  retref: string;
+  avsresp: string;
+  respproc: string;
+  amount: string;
+  resptext: string;
+  authcode: string;
+  respcode: string;
+  merchid: string;
+  cvvresp: string;
+  respstat: string;
+  tokenExpired: boolean;
+}
+
+export interface IAuthManualRequestOptions extends IBaseRequestOptions {
+  authMerchantId: string;
+  amount: number;
+  includeSignature: boolean;
+  includeAmountDisplay: boolean;
+  beep: boolean;
+  includeAVS: boolean;
+  includeCVV: boolean;
+  capture: boolean;
+  gzipSignature: boolean;
+  orderId: string;
+  clearDisplayDelay: number;
+}
+
+export interface IAuthManualResponse {
+  token: string;
+  expiry: string;
+  signature: string;
+  batchid: string;
+  retref: string;
+  avsresp: string;
+  respproc: string;
+  amount: string;
+  resptext: string;
+  authcode: string;
+  respcode: string;
+  merchid: string;
+  cvvresp: string;
+  respstat: string;
 }
 
 export interface ICardConnectError {

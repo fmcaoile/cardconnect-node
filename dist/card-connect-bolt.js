@@ -28,6 +28,21 @@ var CardConnectBolt = /** @class */ (function () {
             "X-CardConnect-SessionKey": cardConnectSessionKey ? cardConnectSessionKey : ''
         };
     };
+    CardConnectBolt.prototype.listTerminalsRequestBuilder = function (endPointVersion) {
+        if (endPointVersion === void 0) { endPointVersion = 'v2'; }
+        var url = this.getBaseURL() + "/" + endPointVersion + "/listTerminals";
+        var body = {
+            merchantId: this.merchantID
+        };
+        return {
+            url: url,
+            method: 'POST',
+            headers: this.generateAuthHeaders(),
+            body: body,
+            json: true,
+            resolveWithFullResponse: true
+        };
+    };
     CardConnectBolt.prototype.pingRequestBuilder = function (cardConnectSessionKey, params, endPointVersion) {
         if (endPointVersion === void 0) { endPointVersion = 'v2'; }
         var url = this.getBaseURL() + "/" + endPointVersion + "/ping";
@@ -83,6 +98,19 @@ var CardConnectBolt = /** @class */ (function () {
     CardConnectBolt.prototype.authCardRequestBuilder = function (cardConnectSessionKey, params, endPointVersion) {
         if (endPointVersion === void 0) { endPointVersion = 'v3'; }
         var url = this.getBaseURL() + "/" + endPointVersion + "/authCard";
+        var body = __assign({ merchantId: this.merchantID }, params);
+        return {
+            url: url,
+            method: 'POST',
+            headers: this.generateAuthHeaders(cardConnectSessionKey),
+            body: body,
+            json: true,
+            resolveWithFullResponse: true
+        };
+    };
+    CardConnectBolt.prototype.authManualRequestBuilder = function (cardConnectSessionKey, params, endPointVersion) {
+        if (endPointVersion === void 0) { endPointVersion = 'v3'; }
+        var url = this.getBaseURL() + "/" + endPointVersion + "/authManual";
         var body = __assign({ merchantId: this.merchantID }, params);
         return {
             url: url,

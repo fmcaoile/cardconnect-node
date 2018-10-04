@@ -1,14 +1,11 @@
 import { OptionsWithUrl } from 'request-promise-native';
-
 import { 
   IBaseRequestOptions,
-
   IConnectRequestOptions,
   IConnectResponse,
-
   IReadInputRequestOptions,
-
-  IAuthCardRequestOptions
+  IAuthCardRequestOptions,
+  IAuthManualRequestOptions
 } from './card-connect-types';
 
 export class CardConnectBolt {
@@ -29,6 +26,22 @@ export class CardConnectBolt {
       "Authorization": this.apiKey,
       "X-CardConnect-SessionKey": cardConnectSessionKey ? cardConnectSessionKey : ''
     }
+  }
+
+  public listTerminalsRequestBuilder (endPointVersion: string = 'v2') : OptionsWithUrl {
+    const url: string = `${this.getBaseURL()}/${endPointVersion}/listTerminals`;
+    const body = {
+      merchantId : this.merchantID
+    };
+
+    return {
+      url: url,
+      method: 'POST',
+      headers: this.generateAuthHeaders(),
+      body: body,
+      json: true,
+      resolveWithFullResponse: true
+    };
   }
 
   public pingRequestBuilder (cardConnectSessionKey: string, params: IBaseRequestOptions, endPointVersion: string = 'v2') : OptionsWithUrl {
@@ -102,6 +115,23 @@ export class CardConnectBolt {
   public authCardRequestBuilder (cardConnectSessionKey: string, params: IAuthCardRequestOptions, endPointVersion: string = 'v3') : OptionsWithUrl {
     const url: string = `${this.getBaseURL()}/${endPointVersion}/authCard`;
     const body: IAuthCardRequestOptions = {
+      merchantId: this.merchantID,
+      ...params
+    };
+
+   return {
+      url: url, 
+      method: 'POST', 
+      headers : this.generateAuthHeaders(cardConnectSessionKey),
+      body: body,
+      json: true,
+      resolveWithFullResponse: true
+    };
+  }
+
+  public authManualRequestBuilder (cardConnectSessionKey: string, params: IAuthManualRequestOptions, endPointVersion: string = 'v3') : OptionsWithUrl {
+    const url: string = `${this.getBaseURL()}/${endPointVersion}/authManual`;
+    const body: IAuthManualRequestOptions = {
       merchantId: this.merchantID,
       ...params
     };

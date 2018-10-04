@@ -18,10 +18,35 @@ var card_connect_bolt_1 = require("./card-connect-bolt");
 var response_handler_1 = require("./response-handler");
 var CardConnect = /** @class */ (function (_super) {
     __extends(CardConnect, _super);
-    function CardConnect(apiKey, subDomain, merchantID, port) {
-        if (port === void 0) { port = 6443; }
-        return _super.call(this, apiKey, subDomain, merchantID, port) || this;
+    function CardConnect(options) {
+        return _super.call(this, options.apiKey, options.subDomain, options.merchantID, options.port || 6443) || this;
     }
+    CardConnect.prototype.listTerminals = function (callback) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            RequestPromiseNative(_this.listTerminalsRequestBuilder())
+                .then(function (response) {
+                var result = response.toJSON();
+                var statusCode = result.statusCode;
+                if (statusCode !== 200) {
+                    response_handler_1.ResponseHandler.reject({
+                        errorCode: -1,
+                        errorMessage: "CardConnect returned status " + statusCode
+                    }, reject, callback);
+                    return;
+                }
+                var responseBody = result.body;
+                response_handler_1.ResponseHandler.resolve(responseBody, resolve, callback);
+            })
+                .catch(function (err) {
+                var result = (err && err.response && err.response.body) || {};
+                response_handler_1.ResponseHandler.reject({
+                    errorCode: result['errorCode'],
+                    errorMessage: result['errorMessage']
+                }, reject, callback);
+            });
+        });
+    };
     CardConnect.prototype.ping = function (cardConnectSessionKey, params, callback) {
         var _this = this;
         return new Promise(function (resolve, reject) {
@@ -143,6 +168,32 @@ var CardConnect = /** @class */ (function (_super) {
         var _this = this;
         return new Promise(function (resolve, reject) {
             RequestPromiseNative(_this.authCardRequestBuilder(cardConnectSessionKey, params))
+                .then(function (response) {
+                var result = response.toJSON();
+                var statusCode = result.statusCode;
+                if (statusCode !== 200) {
+                    response_handler_1.ResponseHandler.reject({
+                        errorCode: -1,
+                        errorMessage: "CardConnect returned status " + statusCode
+                    }, reject, callback);
+                    return;
+                }
+                var responseBody = result.body;
+                response_handler_1.ResponseHandler.resolve(responseBody, resolve, callback);
+            })
+                .catch(function (err) {
+                var result = (err && err.response && err.response.body) || {};
+                response_handler_1.ResponseHandler.reject({
+                    errorCode: result['errorCode'],
+                    errorMessage: result['errorMessage']
+                }, reject, callback);
+            });
+        });
+    };
+    CardConnect.prototype.authManual = function (cardConnectSessionKey, params, callback) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            RequestPromiseNative(_this.authManualRequestBuilder(cardConnectSessionKey, params))
                 .then(function (response) {
                 var result = response.toJSON();
                 var statusCode = result.statusCode;

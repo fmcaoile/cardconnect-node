@@ -5,31 +5,67 @@ import { ResponseHandler } from './response-handler';
 
 import { 
   IBaseRequestOptions,
-
+  IListTerminalsResponse,
   IPingResponse,
-
   IConnectRequestOptions,
   IConnectResponse,
-
   IDisconnectResponse,
-
   IReadInputRequestOptions,
   IReadInputResponse,
-
   IAuthCardRequestOptions,
   IAuthCardResponse,
-
+  IAuthManualRequestOptions,
+  IAuthManualResponse,
   ICardConnectError
 } from './card-connect-types';
 
+export interface ICardConnectInitOptions {
+  apiKey: string;
+  subDomain: string;
+  merchantID: string;
+  port?: number;
+}
+
 export class CardConnect extends CardConnectBolt {
 
-  constructor (
-    apiKey: string,
-    subDomain: string, 
-    merchantID: string,
-    port: number = 6443) {
-    super(apiKey, subDomain, merchantID, port);
+  constructor (options: ICardConnectInitOptions) {
+    super(options.apiKey, options.subDomain, options.merchantID, options.port || 6443);
+  }
+
+  public listTerminals (callback?: (error: ICardConnectError, response?: IListTerminalsResponse) => void) : Promise<IListTerminalsResponse> {
+    return new Promise<IListTerminalsResponse>((resolve, reject) => {
+      RequestPromiseNative(this.listTerminalsRequestBuilder())
+        .then((response: FullResponse) => {
+          const result = response.toJSON();
+          const statusCode = result.statusCode;
+
+          if (statusCode !== 200) {
+            ResponseHandler.reject<ICardConnectError>( 
+              {
+                errorCode: -1,
+                errorMessage: "CardConnect returned status " + statusCode
+              },
+              reject,
+              callback
+            );
+            return;
+          }
+
+          const responseBody: IListTerminalsResponse = result.body;
+          ResponseHandler.resolve<IListTerminalsResponse>(responseBody, resolve, callback);
+        })
+        .catch((err: any) => {
+          const result = (err && err.response && err.response.body) || {};
+          ResponseHandler.reject<ICardConnectError>(
+            {
+              errorCode: result['errorCode'],
+              errorMessage: result['errorMessage']
+            },
+            reject,
+            callback
+          );
+        });
+    });
   }
 
   public ping (cardConnectSessionKey: string, params: IBaseRequestOptions, callback?: (error: ICardConnectError, response?: IPingResponse) => void) : Promise<IPingResponse> {
@@ -221,6 +257,42 @@ export class CardConnect extends CardConnectBolt {
 
           const responseBody: IAuthCardResponse = result.body;
           ResponseHandler.resolve<IAuthCardResponse>(responseBody, resolve, callback);
+        })
+        .catch((err: any) => {
+          const result = (err && err.response && err.response.body) || {};
+          ResponseHandler.reject<ICardConnectError>(
+            {
+              errorCode: result['errorCode'],
+              errorMessage: result['errorMessage']
+            },
+            reject,
+            callback
+          );
+        });
+    });
+  }
+
+  public authManual (cardConnectSessionKey: string, params: IAuthManualRequestOptions, callback?: (error: ICardConnectError, response?: IAuthManualResponse) => void) : Promise<IAuthManualResponse> {
+    return new Promise<IAuthManualResponse>((resolve, reject) => {
+      RequestPromiseNative(this.authManualRequestBuilder(cardConnectSessionKey, params))
+        .then((response: FullResponse) => {
+          const result = response.toJSON();
+          const statusCode = result.statusCode;
+
+          if (statusCode !== 200) {
+            ResponseHandler.reject<ICardConnectError>( 
+              {
+                errorCode: -1,
+                errorMessage: "CardConnect returned status " + statusCode
+              },
+              reject,
+              callback
+            );
+            return;
+          }
+
+          const responseBody: IAuthManualResponse = result.body;
+          ResponseHandler.resolve<IAuthManualResponse>(responseBody, resolve, callback);
         })
         .catch((err: any) => {
           const result = (err && err.response && err.response.body) || {};
