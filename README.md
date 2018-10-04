@@ -160,15 +160,15 @@ cardConnect.readInput(cardConnectSessionKey, params)
 ```
 
 ## TODO
-**dateTime**
-**getPanPadVersion**
-**display**
-**clearDisplay**
-**readConfirmation**
-**readSignature**
-**cancel**
-**readCard**
-**readManual**
+- **dateTime**
+- **getPanPadVersion**
+- **display**
+- **clearDisplay**
+- **readConfirmation**
+- **readSignature**
+- **cancel**
+- **readCard**
+- **readManual**
 
 ## Contributing
 1) Fork it ( https://github.com/fmcaoile/cardconnect-node-bolt/fork )
