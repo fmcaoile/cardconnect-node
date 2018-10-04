@@ -1,6 +1,6 @@
 {
-  "name": "cardconnect-node-bolt",
-  "version": "1.0.0",
+  "name": "cardconnect-node",
+  "version": "1.0.1",
   "description": "CardConnect NodeJS Bolt P2PE Client",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
