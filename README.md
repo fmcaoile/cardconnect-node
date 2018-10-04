@@ -1,5 +1,5 @@
-# cardconnect-node-bolt
-CardConnect NodeJS Bolt P2PE Client
+# cardconnect-node
+CardConnect NodeJS Bolt P2PE Client with Typescript support
 
 https://developer.cardconnect.com/bolt-p2pe#overview
 
