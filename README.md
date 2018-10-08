@@ -59,6 +59,63 @@ cardConnect.connect(params)
   })
   .catch((err) => { ... });
 ```
+### DateTime
+
+CardConnect documentation for this service can be found here: (https://developer.cardconnect.com/bolt-p2pe#dateTime)
+
+```
+import { IDateTimeRequestOptions } from 'cardconnect-node';
+
+const params: IDateTimeRequestOptions = {
+  hsn: string;
+  merchantId?: string;
+  dateTime: string;
+};
+
+cardConnect.dateTime(params)
+  .then((response: boolean)=>{
+    ...
+  })
+  .catch((err) => { ... });
+```
+
+### GetPanPadVersion
+
+CardConnect documentation for this service can be found here: (https://developer.cardconnect.com/bolt-p2pe#getPanPadVersion)
+
+```
+import { IBaseRequestOptions } from 'cardconnect-node';
+
+const params: IBaseRequestOptions = {
+  hsn: string;
+  merchantId?: string;
+};
+
+cardConnect.getPanPadVersion(params)
+  .then((response: boolean)=>{
+    ...
+  })
+  .catch((err) => { ... });
+```
+
+### PreConnect
+
+CardConnect documentation for this service can be found here: (https://developer.cardconnect.com/bolt-p2pe#preconnect)
+
+```
+import { IBaseRequestOptions, IPreConnectResponse } from 'cardconnect-node';
+
+const params: IBaseRequestOptions = {
+  hsn: string;
+  merchantId?: string;
+};
+
+cardConnect.preConnect(params)
+  .then((response: IPreConnectResponse)=>{
+    ...
+  })
+  .catch((err) => { ... });
+```
 
 ### Disconnect
 
@@ -75,6 +132,182 @@ const params: IBaseRequestOptions = {
 cardConnect.disconnect(params)
   .then((response)=>{
     console.log(response.disconnected);
+  })
+  .catch((err) => { ... });
+```
+
+### Display
+
+CardConnect documentation for this service can be found here: (https://developer.cardconnect.com/bolt-p2pe#display)
+
+```
+import { IDisplayRequestOptions, IDisplayResponse } from 'cardconnect-node';
+
+const params: IDisplayRequestOptions = {
+  hsn: string;
+  merchantId?: string;
+  text: string;
+};
+
+cardConnect.display(cardConnectSessionKey, params)
+  .then((response: IDisplayResponse)=>{
+    console.log(response);
+  })
+  .catch((err) => { ... });
+```
+
+### ClearDisplay
+
+CardConnect documentation for this service can be found here: (https://developer.cardconnect.com/bolt-p2pe#clearDisplay)
+
+```
+import { IBaseRequestOptions, IClearDisplayResponse } from 'cardconnect-node';
+
+const params: IBaseRequestOptions = {
+  hsn: string;
+  merchantId?: string;
+};
+
+cardConnect.clearDisplay(cardConnectSessionKey, params)
+  .then((response: IClearDisplayResponse)=>{
+    console.log(response);
+  })
+  .catch((err) => { ... });
+```
+
+### ReadConfirmation
+
+CardConnect documentation for this service can be found here: (https://developer.cardconnect.com/bolt-p2pe#readConfirmation)
+
+```
+import { IReadConfirmationRequestoptions, IReadConfirmationResponse } from 'cardconnect-node';
+
+const params: IReadConfirmationRequestoptions = {
+  hsn: string;
+  merchantId?: string;
+  prompt: string;
+  beep: boolean
+};
+
+cardConnect.readConfirmation(cardConnectSessionKey, params)
+  .then((response: IReadConfirmationResponse)=>{
+    console.log(response);
+  })
+  .catch((err) => { ... });
+```
+
+### ReadInput
+
+CardConnect documentation for this service can be found here: (https://developer.cardconnect.com/bolt-p2pe#readInput)
+
+```
+import { IReadInputRequestOptions, IReadInputResponse } from 'cardconnect-node';
+
+const params: IReadInputRequestOptions = {
+  hsn: string;
+  merchantId?: string;
+  prompt: string; 
+  format: string;
+  beep?: boolean;
+};
+
+cardConnect.readInput(cardConnectSessionKey, params)
+  .then((response: IReadInputResponse)=>{
+    console.log(response.input);
+  })
+  .catch((err) => { ... });
+```
+
+### ReadSignature
+
+CardConnect documentation for this service can be found here: (https://developer.cardconnect.com/bolt-p2pe#readSignature)
+
+```
+import { IReadSignatureRequestOptions, IReadSignatureResponse } from 'cardconnect-node';
+
+const params: IReadSignatureRequestOptions = {
+  hsn: string;
+  merchantId?: string;
+  prompt: string;
+  gzipSignature: boolean;
+  signatureFormat: string;
+  signatureImageType: string;
+  signatureDimensions: string;
+};
+
+cardConnect.readSignature(cardConnectSessionKey, params)
+  .then((response: IReadSignatureResponse)=>{
+    console.log(response.input);
+  })
+  .catch((err) => { ... });
+```
+
+### Cancel
+
+CardConnect documentation for this service can be found here: (https://developer.cardconnect.com/bolt-p2pe#cancel)
+
+```
+import { IBaseRequestOptions, ICancelResponse } from 'cardconnect-node';
+
+const params: IBaseRequestOptions = {
+  hsn: string;
+  merchantId?: string;
+};
+
+cardConnect.cancel(cardConnectSessionKey, params)
+  .then((response: ICancelResponse)=>{
+    console.log(response.input);
+  })
+  .catch((err) => { ... });
+```
+
+### ReadCard
+
+CardConnect documentation for this service can be found here: (https://developer.cardconnect.com/bolt-p2pe#readCard)
+
+```
+import { IReadCardRequestOptions, IReadCardResponse } from 'cardconnect-node';
+
+const params: IReadCardRequestOptions = {
+  hsn: string;
+  merchantId?: string;
+  amount: number;
+  includeSignature?: boolean;
+  includeAmountDisplay?: boolean;
+  beep?: boolean;
+  aid?: string;
+  gzipSignature: boolean;
+  signatureFormat: string;
+  signatureImageType: string;
+  signatureDimensions: string;
+  confirmAmount: boolean;
+};
+
+cardConnect.readCard(cardConnectSessionKey, params)
+  .then((response: IReadCardResponse)=>{
+    console.log(response.input);
+  })
+  .catch((err) => { ... });
+```
+
+### ReadManual
+
+CardConnect documentation for this service can be found here: (https://developer.cardconnect.com/bolt-p2pe#readManual)
+
+```
+import { IReadManualRequestOptions, IReadManualResponse } from 'cardconnect-node';
+
+const params: IReadManualRequestOptions = {
+  hsn: string;
+  merchantId?: string;
+  includeSignature: boolean;
+  beep: boolean;
+  includeExpirationDate: boolean;
+};
+
+cardConnect.readManual(cardConnectSessionKey, params)
+  .then((response: IReadManualResponse)=>{
+    console.log(response.input);
   })
   .catch((err) => { ... });
 ```
@@ -137,39 +370,6 @@ cardConnect.authManual(cardConnectSessionKey, params)
   })
   .catch((err) => { ... });
 ```
-
-### ReadInput
-
-CardConnect documentation for this service can be found here: (https://developer.cardconnect.com/bolt-p2pe#readInput)
-
-```
-import { IReadInputRequestOptions, IReadInputResponse } from 'cardconnect-node';
-
-const params: IReadInputRequestOptions = {
-  hsn: string;
-  merchantId?: string;
-  prompt: string; 
-  format: string;
-  beep?: boolean;
-};
-
-cardConnect.readInput(cardConnectSessionKey, params)
-  .then((response: IReadInputResponse)=>{
-    console.log(response.input);
-  })
-  .catch((err) => { ... });
-```
-
-## TODO
-- **dateTime**
-- **getPanPadVersion**
-- **display**
-- **clearDisplay**
-- **readConfirmation**
-- **readSignature**
-- **cancel**
-- **readCard**
-- **readManual**
 
 ## Contributing
 1) Fork it ( https://github.com/fmcaoile/cardconnect-node-bolt/fork )
