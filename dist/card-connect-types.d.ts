@@ -44,7 +44,7 @@ export interface IReadConfirmationRequestoptions extends IBaseRequestOptions {
 export interface IReadConfirmationResponse {
     confirmed: boolean;
 }
-export interface IReadInputRequestOptions extends IBaseRequestOptions {
+export interface IReadInputRequestOptions extends IReadConfirmationRequestoptions {
     format: string;
 }
 export interface IReadInputResponse {
@@ -71,11 +71,11 @@ export interface IReadCardRequestBase extends IBaseRequestOptions {
     aid?: string;
 }
 export interface IReadCardRequestOptions extends IReadCardRequestBase {
-    gzipSignature: boolean;
-    signatureFormat: string;
-    signatureImageType: string;
-    signatureDimensions: string;
-    confirmAmount: boolean;
+    gzipSignature?: boolean;
+    signatureFormat?: string;
+    signatureImageType?: string;
+    signatureDimensions?: string;
+    confirmAmount?: boolean;
 }
 export interface IAuthCardRequestOptions extends IReadCardRequestOptions {
     includeAVS?: boolean;
@@ -108,27 +108,27 @@ export interface IAuthCardResponse extends IReadCardResponseBase {
     tokenExpired: boolean;
 }
 export interface IReadManualRequestBase extends IBaseRequestOptions {
-    includeSignature: boolean;
-    beep: boolean;
+    includeSignature?: boolean;
+    beep?: boolean;
 }
 export interface IReadManualRequestOptions extends IReadManualRequestBase {
-    includeExpirationDate: boolean;
+    includeExpirationDate?: boolean;
 }
 export interface IReadManualResponse {
-    token: string;
-    expiry: string;
-    signature: string;
+    token?: string;
+    expiry?: string;
+    signature?: string;
 }
 export interface IAuthManualRequestOptions extends IReadManualRequestBase {
-    authMerchantId: string;
     amount: number;
-    includeAmountDisplay: boolean;
-    includeAVS: boolean;
-    includeCVV: boolean;
-    capture: boolean;
-    gzipSignature: boolean;
-    orderId: string;
-    clearDisplayDelay: number;
+    authMerchantId?: string;
+    includeAmountDisplay?: boolean;
+    includeAVS?: boolean;
+    includeCVV?: boolean;
+    capture?: boolean;
+    gzipSignature?: boolean;
+    orderId?: string;
+    clearDisplayDelay?: number;
 }
 export interface IAuthManualResponse extends IReadManualResponse {
     batchid: string;
