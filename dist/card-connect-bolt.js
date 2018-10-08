@@ -25,7 +25,7 @@ var CardConnectBolt = /** @class */ (function () {
     CardConnectBolt.prototype.generateAuthHeaders = function (cardConnectSessionKey) {
         return {
             "Authorization": this.apiKey,
-            "X-CardConnect-SessionKey": cardConnectSessionKey ? cardConnectSessionKey : ''
+            "X-CardConnect-SessionKey": cardConnectSessionKey ? cardConnectSessionKey : undefined
         };
     };
     CardConnectBolt.prototype.listTerminalsRequestBuilder = function (endPointVersion) {
@@ -43,6 +43,32 @@ var CardConnectBolt = /** @class */ (function () {
             resolveWithFullResponse: true
         };
     };
+    CardConnectBolt.prototype.dateTimeRequestBuilder = function (params, endPointVersion) {
+        if (endPointVersion === void 0) { endPointVersion = 'v2'; }
+        var url = this.getBaseURL() + "/" + endPointVersion + "/dateTime";
+        var body = __assign({ merchantId: this.merchantID }, params);
+        return {
+            url: url,
+            method: 'POST',
+            headers: this.generateAuthHeaders(),
+            body: body,
+            json: true,
+            resolveWithFullResponse: true
+        };
+    };
+    CardConnectBolt.prototype.panPadVersionRequestBuilder = function (params, endPointVersion) {
+        if (endPointVersion === void 0) { endPointVersion = 'v2'; }
+        var url = this.getBaseURL() + "/" + endPointVersion + "/getPanPadVersion";
+        var body = __assign({ merchantId: this.merchantID }, params);
+        return {
+            url: url,
+            method: 'POST',
+            headers: this.generateAuthHeaders(),
+            body: body,
+            json: true,
+            resolveWithFullResponse: true
+        };
+    };
     CardConnectBolt.prototype.pingRequestBuilder = function (cardConnectSessionKey, params, endPointVersion) {
         if (endPointVersion === void 0) { endPointVersion = 'v2'; }
         var url = this.getBaseURL() + "/" + endPointVersion + "/ping";
@@ -51,6 +77,19 @@ var CardConnectBolt = /** @class */ (function () {
             url: url,
             method: 'POST',
             headers: this.generateAuthHeaders(cardConnectSessionKey),
+            body: body,
+            json: true,
+            resolveWithFullResponse: true
+        };
+    };
+    CardConnectBolt.prototype.preConnectRequestBuilder = function (params, endPointVersion) {
+        if (endPointVersion === void 0) { endPointVersion = 'v2'; }
+        var url = this.getBaseURL() + "/" + endPointVersion + "/preconnect";
+        var body = __assign({ merchantId: this.merchantID }, params);
+        return {
+            url: url,
+            method: 'POST',
+            headers: this.generateAuthHeaders(),
             body: body,
             json: true,
             resolveWithFullResponse: true
@@ -82,9 +121,100 @@ var CardConnectBolt = /** @class */ (function () {
             resolveWithFullResponse: true
         };
     };
+    CardConnectBolt.prototype.displayRequestBuilder = function (cardConnectSessionKey, params, endPointVersion) {
+        if (endPointVersion === void 0) { endPointVersion = 'v2'; }
+        var url = this.getBaseURL() + "/" + endPointVersion + "/display";
+        var body = __assign({ merchantId: this.merchantID }, params);
+        return {
+            url: url,
+            method: 'POST',
+            headers: this.generateAuthHeaders(cardConnectSessionKey),
+            body: body,
+            json: true,
+            resolveWithFullResponse: true
+        };
+    };
+    CardConnectBolt.prototype.clearDisplayRequestBuilder = function (cardConnectSessionKey, params, endPointVersion) {
+        if (endPointVersion === void 0) { endPointVersion = 'v2'; }
+        var url = this.getBaseURL() + "/" + endPointVersion + "/clearDisplay";
+        var body = __assign({ merchantId: this.merchantID }, params);
+        return {
+            url: url,
+            method: 'POST',
+            headers: this.generateAuthHeaders(cardConnectSessionKey),
+            body: body,
+            json: true,
+            resolveWithFullResponse: true
+        };
+    };
+    CardConnectBolt.prototype.readConfirmationRequestBuilder = function (cardConnectSessionKey, params, endPointVersion) {
+        if (endPointVersion === void 0) { endPointVersion = 'v2'; }
+        var url = this.getBaseURL() + "/" + endPointVersion + "/readConfirmation";
+        var body = __assign({ merchantId: this.merchantID }, params);
+        return {
+            url: url,
+            method: 'POST',
+            headers: this.generateAuthHeaders(cardConnectSessionKey),
+            body: body,
+            json: true,
+            resolveWithFullResponse: true
+        };
+    };
     CardConnectBolt.prototype.readInputRequestBuilder = function (cardConnectSessionKey, params, endPointVersion) {
         if (endPointVersion === void 0) { endPointVersion = 'v2'; }
         var url = this.getBaseURL() + "/" + endPointVersion + "/readInput";
+        var body = __assign({ merchantId: this.merchantID }, params);
+        return {
+            url: url,
+            method: 'POST',
+            headers: this.generateAuthHeaders(cardConnectSessionKey),
+            body: body,
+            json: true,
+            resolveWithFullResponse: true
+        };
+    };
+    CardConnectBolt.prototype.readSignatureRequestBuilder = function (cardConnectSessionKey, params, endPointVersion) {
+        if (endPointVersion === void 0) { endPointVersion = 'v2'; }
+        var url = this.getBaseURL() + "/" + endPointVersion + "/readSignature";
+        var body = __assign({ merchantId: this.merchantID }, params);
+        return {
+            url: url,
+            method: 'POST',
+            headers: this.generateAuthHeaders(cardConnectSessionKey),
+            body: body,
+            json: true,
+            resolveWithFullResponse: true
+        };
+    };
+    CardConnectBolt.prototype.cancelRequestBuilder = function (cardConnectSessionKey, params, endPointVersion) {
+        if (endPointVersion === void 0) { endPointVersion = 'v2'; }
+        var url = this.getBaseURL() + "/" + endPointVersion + "/cancel";
+        var body = __assign({ merchantId: this.merchantID }, params);
+        return {
+            url: url,
+            method: 'POST',
+            headers: this.generateAuthHeaders(cardConnectSessionKey),
+            body: body,
+            json: true,
+            resolveWithFullResponse: true
+        };
+    };
+    CardConnectBolt.prototype.readCardRequestBuilder = function (cardConnectSessionKey, params, endPointVersion) {
+        if (endPointVersion === void 0) { endPointVersion = 'v2'; }
+        var url = this.getBaseURL() + "/" + endPointVersion + "/readCard";
+        var body = __assign({ merchantId: this.merchantID }, params);
+        return {
+            url: url,
+            method: 'POST',
+            headers: this.generateAuthHeaders(cardConnectSessionKey),
+            body: body,
+            json: true,
+            resolveWithFullResponse: true
+        };
+    };
+    CardConnectBolt.prototype.readManualRequestBuilder = function (cardConnectSessionKey, params, endPointVersion) {
+        if (endPointVersion === void 0) { endPointVersion = 'v2'; }
+        var url = this.getBaseURL() + "/" + endPointVersion + "/readManual";
         var body = __assign({ merchantId: this.merchantID }, params);
         return {
             url: url,

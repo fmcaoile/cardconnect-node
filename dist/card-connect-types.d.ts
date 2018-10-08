@@ -5,6 +5,12 @@ export interface IBaseRequestOptions {
 export interface IListTerminalsResponse {
     terminals: Array<string>;
 }
+export interface IDateTimeRequestOptions extends IBaseRequestOptions {
+    dateTime: string;
+}
+export interface IPanPadResponse {
+    version: string;
+}
 export interface IPingResponse {
     connected: boolean;
 }
@@ -16,34 +22,78 @@ export interface IConnectResponse {
     sessionKey: string;
     statusCode: number;
 }
+export interface IPreConnectResponse {
+    statusCode: number;
+}
 export interface IDisconnectResponse {
     disconnected: boolean;
 }
-export interface IReadInputRequestOptions extends IBaseRequestOptions {
+export interface IDisplayRequestOptions extends IBaseRequestOptions {
+    text: string;
+}
+export interface IDisplayResponse {
+    success: boolean;
+}
+export interface IClearDisplayResponse {
+    success: boolean;
+}
+export interface IReadConfirmationRequestoptions extends IBaseRequestOptions {
     prompt: string;
+    beep: boolean;
+}
+export interface IReadConfirmationResponse {
+    confirmed: boolean;
+}
+export interface IReadInputRequestOptions extends IBaseRequestOptions {
     format: string;
-    beep?: boolean;
 }
 export interface IReadInputResponse {
     input: string;
 }
-export interface IAuthCardRequestOptions extends IBaseRequestOptions {
-    amount?: number;
+export interface IReadSignatureRequestOptions extends IBaseRequestOptions {
+    prompt: string;
+    gzipSignature: boolean;
+    signatureFormat: string;
+    signatureImageType: string;
+    signatureDimensions: string;
+}
+export interface IReadSignatureResponse {
+    signature: string;
+}
+export interface ICancelResponse {
+    cancelled: boolean;
+}
+export interface IReadCardRequestBase extends IBaseRequestOptions {
+    amount: number;
     includeSignature?: boolean;
     includeAmountDisplay?: boolean;
     beep?: boolean;
     aid?: string;
+}
+export interface IReadCardRequestOptions extends IReadCardRequestBase {
+    gzipSignature: boolean;
+    signatureFormat: string;
+    signatureImageType: string;
+    signatureDimensions: string;
+    confirmAmount: boolean;
+}
+export interface IAuthCardRequestOptions extends IReadCardRequestOptions {
     includeAVS?: boolean;
     capture?: boolean;
     orderId?: string;
     userFields?: Object;
     clearDisplayDelay?: number;
 }
-export interface IAuthCardResponse {
+export interface IReadCardResponseBase {
     token: string;
     expiry: string;
     name: string;
     signature: string;
+}
+export interface IReadCardResponse extends IReadCardResponseBase {
+    singleUseToken: boolean;
+}
+export interface IAuthCardResponse extends IReadCardResponseBase {
     batchid: string;
     retref: string;
     avsresp: string;
@@ -57,12 +107,22 @@ export interface IAuthCardResponse {
     respstat: string;
     tokenExpired: boolean;
 }
-export interface IAuthManualRequestOptions extends IBaseRequestOptions {
+export interface IReadManualRequestBase extends IBaseRequestOptions {
+    includeSignature: boolean;
+    beep: boolean;
+}
+export interface IReadManualRequestOptions extends IReadManualRequestBase {
+    includeExpirationDate: boolean;
+}
+export interface IReadManualResponse {
+    token: string;
+    expiry: string;
+    signature: string;
+}
+export interface IAuthManualRequestOptions extends IReadManualRequestBase {
     authMerchantId: string;
     amount: number;
-    includeSignature: boolean;
     includeAmountDisplay: boolean;
-    beep: boolean;
     includeAVS: boolean;
     includeCVV: boolean;
     capture: boolean;
@@ -70,10 +130,7 @@ export interface IAuthManualRequestOptions extends IBaseRequestOptions {
     orderId: string;
     clearDisplayDelay: number;
 }
-export interface IAuthManualResponse {
-    token: string;
-    expiry: string;
-    signature: string;
+export interface IAuthManualResponse extends IReadManualResponse {
     batchid: string;
     retref: string;
     avsresp: string;

@@ -47,6 +47,57 @@ var CardConnect = /** @class */ (function (_super) {
             });
         });
     };
+    CardConnect.prototype.dateTime = function (params, callback) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            RequestPromiseNative(_this.dateTimeRequestBuilder(params))
+                .then(function (response) {
+                var result = response.toJSON();
+                var statusCode = result.statusCode;
+                if (statusCode !== 200) {
+                    response_handler_1.ResponseHandler.reject({
+                        errorCode: -1,
+                        errorMessage: "CardConnect returned status " + statusCode
+                    }, reject, callback);
+                    return;
+                }
+                response_handler_1.ResponseHandler.resolve(true, resolve, callback);
+            })
+                .catch(function (err) {
+                var result = (err && err.response && err.response.body) || {};
+                response_handler_1.ResponseHandler.reject({
+                    errorCode: result['errorCode'],
+                    errorMessage: result['errorMessage']
+                }, reject, callback);
+            });
+        });
+    };
+    CardConnect.prototype.getPanPadVersion = function (params, callback) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            RequestPromiseNative(_this.panPadVersionRequestBuilder(params))
+                .then(function (response) {
+                var result = response.toJSON();
+                var statusCode = result.statusCode;
+                if (statusCode !== 200) {
+                    response_handler_1.ResponseHandler.reject({
+                        errorCode: -1,
+                        errorMessage: "CardConnect returned status " + statusCode
+                    }, reject, callback);
+                    return;
+                }
+                var responseBody = result.body;
+                response_handler_1.ResponseHandler.resolve(responseBody, resolve, callback);
+            })
+                .catch(function (err) {
+                var result = (err && err.response && err.response.body) || {};
+                response_handler_1.ResponseHandler.reject({
+                    errorCode: result['errorCode'],
+                    errorMessage: result['errorMessage']
+                }, reject, callback);
+            });
+        });
+    };
     CardConnect.prototype.ping = function (cardConnectSessionKey, params, callback) {
         var _this = this;
         return new Promise(function (resolve, reject) {
@@ -63,6 +114,43 @@ var CardConnect = /** @class */ (function (_super) {
                 }
                 var responseBody = result.body;
                 response_handler_1.ResponseHandler.resolve(responseBody, resolve, callback);
+            })
+                .catch(function (err) {
+                var result = (err && err.response && err.response.body) || {};
+                response_handler_1.ResponseHandler.reject({
+                    errorCode: result['errorCode'],
+                    errorMessage: result['errorMessage']
+                }, reject, callback);
+            });
+        });
+    };
+    CardConnect.prototype.preConnect = function (params, callback) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            RequestPromiseNative(_this.connectRequestBuilder(params))
+                .then(function (response) {
+                var result = response.toJSON();
+                var statusCode = result.statusCode;
+                var cardConnectSessionKey = result.headers['x-cardconnect-sessionkey'];
+                if (statusCode !== 200) {
+                    response_handler_1.ResponseHandler.reject({
+                        errorCode: -1,
+                        errorMessage: "CardConnect returned status " + statusCode
+                    }, reject, callback);
+                    return;
+                }
+                if (cardConnectSessionKey && cardConnectSessionKey.length > 0) {
+                    cardConnectSessionKey = cardConnectSessionKey.slice(0, cardConnectSessionKey.indexOf(';'));
+                    response_handler_1.ResponseHandler.resolve({
+                        statusCode: statusCode
+                    }, resolve, callback);
+                }
+                else {
+                    response_handler_1.ResponseHandler.reject({
+                        errorCode: -2,
+                        errorMessage: "CardConnect missing x-cardconnect-sessionkey"
+                    }, reject, callback);
+                }
             })
                 .catch(function (err) {
                 var result = (err && err.response && err.response.body) || {};
@@ -138,10 +226,195 @@ var CardConnect = /** @class */ (function (_super) {
             });
         });
     };
+    CardConnect.prototype.display = function (cardConnectSessionKey, params, callback) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            RequestPromiseNative(_this.displayRequestBuilder(cardConnectSessionKey, params))
+                .then(function (response) {
+                var result = response.toJSON();
+                var statusCode = result.statusCode;
+                if (statusCode !== 200) {
+                    response_handler_1.ResponseHandler.reject({
+                        errorCode: -1,
+                        errorMessage: "CardConnect returned status " + statusCode
+                    }, reject, callback);
+                    return;
+                }
+                response_handler_1.ResponseHandler.resolve({
+                    success: true
+                }, resolve, callback);
+            })
+                .catch(function (err) {
+                var result = (err && err.response && err.response.body) || {};
+                response_handler_1.ResponseHandler.reject({
+                    errorCode: result['errorCode'],
+                    errorMessage: result['errorMessage']
+                }, reject, callback);
+            });
+        });
+    };
+    CardConnect.prototype.clearDisplay = function (cardConnectSessionKey, params, callback) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            RequestPromiseNative(_this.clearDisplayRequestBuilder(cardConnectSessionKey, params))
+                .then(function (response) {
+                var result = response.toJSON();
+                var statusCode = result.statusCode;
+                if (statusCode !== 200) {
+                    response_handler_1.ResponseHandler.reject({
+                        errorCode: -1,
+                        errorMessage: "CardConnect returned status " + statusCode
+                    }, reject, callback);
+                    return;
+                }
+                response_handler_1.ResponseHandler.resolve({
+                    success: true
+                }, resolve, callback);
+            })
+                .catch(function (err) {
+                var result = (err && err.response && err.response.body) || {};
+                response_handler_1.ResponseHandler.reject({
+                    errorCode: result['errorCode'],
+                    errorMessage: result['errorMessage']
+                }, reject, callback);
+            });
+        });
+    };
+    CardConnect.prototype.readConfirmation = function (cardConnectSessionKey, params, callback) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            RequestPromiseNative(_this.readConfirmationRequestBuilder(cardConnectSessionKey, params))
+                .then(function (response) {
+                var result = response.toJSON();
+                var statusCode = result.statusCode;
+                if (statusCode !== 200) {
+                    response_handler_1.ResponseHandler.reject({
+                        errorCode: -1,
+                        errorMessage: "CardConnect returned status " + statusCode
+                    }, reject, callback);
+                    return;
+                }
+                var responseBody = result.body;
+                response_handler_1.ResponseHandler.resolve(responseBody, resolve, callback);
+            })
+                .catch(function (err) {
+                var result = (err && err.response && err.response.body) || {};
+                response_handler_1.ResponseHandler.reject({
+                    errorCode: result['errorCode'],
+                    errorMessage: result['errorMessage']
+                }, reject, callback);
+            });
+        });
+    };
     CardConnect.prototype.readInput = function (cardConnectSessionKey, params, callback) {
         var _this = this;
         return new Promise(function (resolve, reject) {
             RequestPromiseNative(_this.readInputRequestBuilder(cardConnectSessionKey, params))
+                .then(function (response) {
+                var result = response.toJSON();
+                var statusCode = result.statusCode;
+                if (statusCode !== 200) {
+                    response_handler_1.ResponseHandler.reject({
+                        errorCode: -1,
+                        errorMessage: "CardConnect returned status " + statusCode
+                    }, reject, callback);
+                    return;
+                }
+                var responseBody = result.body;
+                response_handler_1.ResponseHandler.resolve(responseBody, resolve, callback);
+            })
+                .catch(function (err) {
+                var result = (err && err.response && err.response.body) || {};
+                response_handler_1.ResponseHandler.reject({
+                    errorCode: result['errorCode'],
+                    errorMessage: result['errorMessage']
+                }, reject, callback);
+            });
+        });
+    };
+    CardConnect.prototype.readSignature = function (cardConnectSessionKey, params, callback) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            RequestPromiseNative(_this.readSignatureRequestBuilder(cardConnectSessionKey, params))
+                .then(function (response) {
+                var result = response.toJSON();
+                var statusCode = result.statusCode;
+                if (statusCode !== 200) {
+                    response_handler_1.ResponseHandler.reject({
+                        errorCode: -1,
+                        errorMessage: "CardConnect returned status " + statusCode
+                    }, reject, callback);
+                    return;
+                }
+                var responseBody = result.body;
+                response_handler_1.ResponseHandler.resolve(responseBody, resolve, callback);
+            })
+                .catch(function (err) {
+                var result = (err && err.response && err.response.body) || {};
+                response_handler_1.ResponseHandler.reject({
+                    errorCode: result['errorCode'],
+                    errorMessage: result['errorMessage']
+                }, reject, callback);
+            });
+        });
+    };
+    CardConnect.prototype.cancel = function (cardConnectSessionKey, params, callback) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            RequestPromiseNative(_this.cancelRequestBuilder(cardConnectSessionKey, params))
+                .then(function (response) {
+                var result = response.toJSON();
+                var statusCode = result.statusCode;
+                if (statusCode !== 200) {
+                    response_handler_1.ResponseHandler.reject({
+                        errorCode: -1,
+                        errorMessage: "CardConnect returned status " + statusCode
+                    }, reject, callback);
+                    return;
+                }
+                response_handler_1.ResponseHandler.resolve({
+                    cancelled: true
+                }, resolve, callback);
+            })
+                .catch(function (err) {
+                var result = (err && err.response && err.response.body) || {};
+                response_handler_1.ResponseHandler.reject({
+                    errorCode: result['errorCode'],
+                    errorMessage: result['errorMessage']
+                }, reject, callback);
+            });
+        });
+    };
+    CardConnect.prototype.readCard = function (cardConnectSessionKey, params, callback) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            RequestPromiseNative(_this.readCardRequestBuilder(cardConnectSessionKey, params))
+                .then(function (response) {
+                var result = response.toJSON();
+                var statusCode = result.statusCode;
+                if (statusCode !== 200) {
+                    response_handler_1.ResponseHandler.reject({
+                        errorCode: -1,
+                        errorMessage: "CardConnect returned status " + statusCode
+                    }, reject, callback);
+                    return;
+                }
+                var responseBody = result.body;
+                response_handler_1.ResponseHandler.resolve(responseBody, resolve, callback);
+            })
+                .catch(function (err) {
+                var result = (err && err.response && err.response.body) || {};
+                response_handler_1.ResponseHandler.reject({
+                    errorCode: result['errorCode'],
+                    errorMessage: result['errorMessage']
+                }, reject, callback);
+            });
+        });
+    };
+    CardConnect.prototype.readManual = function (cardConnectSessionKey, params, callback) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            RequestPromiseNative(_this.readManualRequestBuilder(cardConnectSessionKey, params))
                 .then(function (response) {
                 var result = response.toJSON();
                 var statusCode = result.statusCode;
