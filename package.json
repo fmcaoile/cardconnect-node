@@ -1,6 +1,6 @@
 {
   "name": "cardconnect-node",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "CardConnect NodeJS Bolt P2PE Client",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fmcaoile/cardconnect-node-bolt.git"
+    "url": "git+https://github.com/fmcaoile/cardconnect-node.git"
   },
   "keywords": [
     "cardconnect",
@@ -21,9 +21,9 @@
   "author": "Francis Marc Caoile",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/fmcaoile/cardconnect-node-bolt/issues"
+    "url": "https://github.com/fmcaoile/cardconnect-node/issues"
   },
-  "homepage": "https://github.com/fmcaoile/cardconnect-node-bolt#readme",
+  "homepage": "https://github.com/fmcaoile/cardconnect-node#readme",
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
